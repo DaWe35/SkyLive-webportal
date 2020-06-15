@@ -1,6 +1,7 @@
 Options -Indexes
 
 RewriteEngine On
+RewriteRule ^.git/ - [L,R=404]
 
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
