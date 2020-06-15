@@ -1,6 +1,6 @@
 .bg-gradient {
-	background: rgb(112,36,89);
-	background: linear-gradient(121deg, rgba(112,36,89,1) 0%, rgba(68,51,122,1) 100%); 
+	background: rgb(141, 40, 49);
+	background: linear-gradient(130deg, rgb(141, 40, 49) 30%, rgb(44, 136, 136) 75%); 
 }
 
 #subscribe button {
