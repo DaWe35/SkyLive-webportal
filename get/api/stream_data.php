@@ -14,5 +14,5 @@ if (!empty($stream_data)) {
     echo json_encode($stream_data);
 } else {
     header("HTTP/1.0 404 Not Found");
-    echo json_encode(array("error" => "404 :ot found"));
+    echo json_encode(array("error" => "404 Not Found"));
 }
