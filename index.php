@@ -10,6 +10,7 @@ domain.com / PAGE / SUBPAGE / SSPAGE / SSSPAGE
 */
 
 require_once "model/initialize.php";
+require_once "model/bruteforce_protection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$enable_CSRF = array('write');
@@ -18,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		require_once "model/referer.php";
 		referer(); // Check http referrer - so hackers can't send external forms to chainscore
 	}
-	require_once "model/bruteforce_protection.php";
 	bruteforce_check_ip();
 	if (file_exists('post/'.PAGE.'.php')) { include 'post/'.PAGE.'.php'; } //INCLUDE CONTROLLER
 } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
