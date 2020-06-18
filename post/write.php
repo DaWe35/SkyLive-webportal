@@ -8,6 +8,11 @@ if (!isset($_POST['token']) || empty($_POST['token'])) {
 require 'model/get_stream.php';
 $streamid = get_streamid_from_token($_POST['token']);
 
+if (!$streamid) {
+    header('HTTP/1.0 403 Forbidden');
+    exit('Access denied');
+}
+
 if (!isset($_POST['length']) || floatval($_POST['length']) <= 0) {
     header('HTTP/1.0 400 Bad Request');
     exit('Wrong value for length');

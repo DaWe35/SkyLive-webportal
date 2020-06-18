@@ -15,6 +15,4 @@ function bruteforce_increase_failed_attempts() {
     /*
     increase ip attempts in DB. 
     */
-    header('HTTP/1.0 403 Forbidden');
-    exit('Access denied');
 }
