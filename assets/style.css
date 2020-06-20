@@ -21,11 +21,17 @@
 	border-width: 17px 0 17px 30px;
 	vertical-align: super;
 	padding: 0px;
-	cursor: text !important;
+	cursor: text;
 }
 
 .play:hover {
 	border-color: transparent transparent transparent #FFF;
+}
+
+.mini-logo-play {
+	height: 18px;
+	border-width: 10px 0 10px 18px;
+	cursor: pointer;
 }
 
 .card a, .card a:hover {
@@ -69,7 +75,6 @@ body.player {
 	margin: 0;
 	color: #FFF;
 	min-height: 100vh;
-	font-family: Arial, Helvetica, sans-serif;
 }
 video {
 	width: 100%;
@@ -111,9 +116,12 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 
 
 
-.player-container {
-	width: 100%;
-	display: inline-block
+.player-title-bar {
+	text-align: left;
+}
+
+.player-title-bar h1 {
+	font-size: 140%;
 }
 
 
@@ -127,13 +135,6 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 
 
 @media (min-width: 900px) {
-	.player-container {
-		width: 70%;
-	}
-	.chatmode #chat {
-		width: 20% !important;
-		height: 84vh;
-	}
 	#portal-switch-text-long {
 		display: block;
 	}
@@ -149,13 +150,13 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 #chat {
 	display: none;
 	border: none;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 }
 
 /* CHAT MODE */
 .chatmode #chat {
 	display: inline-block !important;
-	width: 80%;
 }
 
 .logo {
@@ -163,9 +164,9 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 	font-size: 140%;
 	text-decoration: none !important;
 	font-weight: bold;
-	padding: 20px;
-	text-align: center;
+	padding: 5px 10px;
 	display: block;
+	text-align: left;
 }
 
 .noselect {
@@ -180,7 +181,8 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 
 /* portal switch dropdown */
 #portal-switcher {
-	padding: 20px;
+	padding-top: 10px;
+	padding-right: 10px;
 	position: absolute;
 	right: 0;
 }
@@ -216,13 +218,10 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 	position: relative;
 	display: block;
 	cursor: pointer;
+	margin-bottom: 5px;
 }
 
 /*show the submenu when input is checked*/
 #portal-switcher input:checked~ul.submenu {
 	display: block;
-}
-
-.minnit-chat-container {
-	display: inline;
 }

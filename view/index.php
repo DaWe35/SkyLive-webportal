@@ -7,7 +7,7 @@ $player = URL . 'player?s=';
 		<div class="row h-100 align-items-center">
 			<div class="col-lg-9">
 				<h1 class="display-4 text-white mt-5 mb-2 font-weight-bold">
-					<button class='play'></button>
+					<button class='play' style="cursor: default;"></button>
 					SkyLive
 				</h1>
 				<p class="lead mb-5 text-white-50">Decentralized livestreams on Sia Skynet<br>

@@ -4,6 +4,7 @@
 
 </head>
 <body class="player chatmode">
+    
     <div id="portal-switcher">
         <input id="check01" type="checkbox" name="menu" />
         <label for="check01" class="noselect" style="opacity: 0.7;">
@@ -14,24 +15,36 @@
             <li id="loading_portals"><a href="#">Loading portals...</a></li>
         </ul>
     </div>
-    <a href="<?= URL ?>" class="logo"><button class="play"></button> &nbsp; SkyLive</a>
-    <div class="player-container">
-        <div id="ios_warning">
-            Sorry, IOS  does not support HLS streaming.<br>
-            <a href="vlc-x-callback://x-callback-url/stream?url=<?= $stream_url ?>">Open in VLC</a><br>
-            If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
-        </div>
-        <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>">Sorry, HTML5 video is not supported in your browser</video>
-    </div><!--
---><div class="minnit-chat-container"><!--
-    --><iframe id="chat" src="https://minnit.chat/SkyLive?embed&&nickname=" allowTransparency="true"></iframe><br><a href="https://minnit.chat/SkyLive" target="_blank">HTML5 Chatroom powered by Minnit Chat</a>
-    </div>        
+    <a href="<?= URL ?>" class="logo"><button class="play mini-logo-play"></button> &nbsp;SkyLive</a>
 
-    <button onclick="switchMode()" class="BT-OH-BR-R6-NF-FH-FP-PT" id="button">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-9 p-0">
+                <div id="ios_warning">
+                    Sorry, IOS  does not support HLS streaming.<br>
+                    <a href="vlc-x-callback://x-callback-url/stream?url=<?= $stream_url ?>">Open in VLC</a><br>
+                    If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
+                </div>
+                <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>">Sorry, HTML5 video is not supported in your browser</video>
+            </div>
+            <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
+                <iframe id="chat" src="https://minnit.chat/SkyLive?embed&&nickname=" allowTransparency="true"></iframe><br><a href="https://minnit.chat/SkyLive" target="_blank">HTML5 Chatroom powered by Minnit Chat</a>
+            </div>
+        </div>
+
+        <div class="row player-title-bar">
+            <div class="col-12 p-0">
+                <h1 class="text-light"><?= $stream['title'] ?></h1>
+                <p class="text-dark"><?= $channel['name'] ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <button onclick="switchMode()" class="BT-OH-BR-R6-NF-FH-FP-PT" id="button">
         <canvas id="canvas"></canvas> 
         <hover></hover>
         <span>Toggle chat</span>
-    </button>
+    </button> -->
     
     <script>
     

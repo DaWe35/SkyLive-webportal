@@ -6,11 +6,18 @@ if (isset($_GET['portal']) && !empty($_GET['portal'])) {
     $portal = '';
 }
 
-$stmt = $db->prepare("SELECT streamid, title, description, scheule_time, visibility FROM stream WHERE streamid = ? LIMIT 1");
+$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE streamid = ? LIMIT 1");
 if (!$stmt->execute([$_GET['s']])) {
     exit('Database error');
 }
 $stream = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = null;
+
+$stmt = $db->prepare("SELECT name, avatar FROM users WHERE id = ? LIMIT 1");
+if (!$stmt->execute([$stream['userid']])) {
+    exit('Database error');
+}
+$channel = $stmt->fetch(PDO::FETCH_ASSOC);
 $stmt = null;
 
 $pagetitle = $stream['title'];
