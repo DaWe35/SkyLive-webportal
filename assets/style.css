@@ -225,3 +225,8 @@ canvas{margin: 0;padding: 0;display:block;position:absolute;margin-top:-30px;}
 #portal-switcher input:checked~ul.submenu {
 	display: block;
 }
+
+footer .built-with-sia-logo {
+	margin-top: -17px;
+	height: 60px;
+}
