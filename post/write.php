@@ -5,6 +5,10 @@ if (!isset($_POST['token']) || empty($_POST['token'])) {
     exit('Access denied');
 }
 
+if ($_POST['token'] == 'test') {
+    exit('ok');
+}
+
 require 'model/get_stream.php';
 $streamid = get_streamid_from_token($_POST['token']);
 
