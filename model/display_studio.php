@@ -21,5 +21,6 @@ if (!isset($displayPage)) {
             }
             ?>
         </div>
+        <?php include "view/include_studio/footer.php"; ?>
     </body>
 </html>

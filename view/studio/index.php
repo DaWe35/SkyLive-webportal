@@ -26,6 +26,14 @@
 							</a>
 						</div>
 						<div class="video-cell">
+							<div class="btn-group edit-dots">
+								<button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									...
+								</button>
+								<div class="dropdown-menu dropdown-menu-right bg-dark">
+									<a class="dropdown-item btn" href="/studio/new-stream?edit=<?= $row['streamid'] ?>">Edit</a>
+								</div>
+							</div>
 							<a href="/player?s=<?= $row['streamid'] ?>">
 								<h4><?= $row['title'] ?></h4>
 							</a>

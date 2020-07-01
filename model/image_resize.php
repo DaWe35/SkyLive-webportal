@@ -14,6 +14,10 @@ function resize($filename, $uniqid, $upload_folder, $source, $size) {
     // Resize
     imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
+    if (file_exists($target_file)) {
+        unlink($target_file);
+    }
+
     if (imagejpeg($thumb, $target_file, '96')) {
         // echo $size . " ok. ";
         $imgshowsize = '_'.$size.'.jpg';
@@ -23,7 +27,7 @@ function resize($filename, $uniqid, $upload_folder, $source, $size) {
 }
 
 function save_image($name, $upload_folder) {
-    if (!empty($_FILES)) {
+    if ($_FILES["file"]["name"] != '') {
             
         $imageFileType = pathinfo($_FILES["file"]["name"],PATHINFO_EXTENSION);
         $imageFileType = strtolower($imageFileType);
@@ -41,13 +45,13 @@ function save_image($name, $upload_folder) {
 
         if ($imageFileType == 'jpg' or $imageFileType == 'jpeg') {
             $source = imagecreatefromjpeg($filename);
-        } else  if ($imageFileType == 'png') {
+        } else if ($imageFileType == 'png') {
             $source = imagecreatefrompng($filename);
-        } else  if ($imageFileType == 'gif') {
+        } else if ($imageFileType == 'gif') {
             $source = imagecreatefromgif($filename);
-        } else  if ($imageFileType == 'webp') {
+        } else if ($imageFileType == 'webp') {
             $source = imagecreatefromwebp($filename);
-        } else  if ($imageFileType == 'bmp') {
+        } else if ($imageFileType == 'bmp') {
             $source = imagecreatefromwbmp($filename);
         } else {
             $source = 0;
@@ -60,7 +64,6 @@ function save_image($name, $upload_folder) {
         return true;
 
     } else {
-        header("HTTP/1.0 400 Bad Request");
-        exit('empty files');
+        return false;
     }
 }

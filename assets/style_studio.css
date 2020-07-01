@@ -93,6 +93,28 @@ nav a p {
     display: inline-grid;
 }
 
+.video-cell .edit-dots {
+    float: right;
+}
+
+.video-cell .edit-dots button {
+    color: grey;
+}
+
+
+.video-cell .edit-dots button:focus {
+box-shadow: none;
+}
+
+.video-cell .edit-dots .dropdown-item {
+    color: #FFF;
+}
+
+.video-cell .edit-dots .dropdown-item:focus, .video-cell .edit-dots .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
 .w3-row-padding img {
     margin-bottom: 12px
 }
