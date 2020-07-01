@@ -94,6 +94,10 @@
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("loading_portals").remove()
+
+            url = "/player?s=<?= htmlspecialchars($_GET['s']) ?>"
+            document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Automatic</a></li>'
+
             let portals = JSON.parse(this.responseText);
             portals.forEach(portal => {
                 portalSum = 0
@@ -105,6 +109,17 @@
                     document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">' + portal.name + '</a></li>'
                 }
             })
+            
+            url = "/player?s=<?= htmlspecialchars($_GET['s']) ?>&portal=https://helsinki.siasky.net"
+            document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Helsinki.SiaSky.net</a></li>'
+            
+            url = "/player?s=<?= htmlspecialchars($_GET['s']) ?>&portal=https://germany.siasky.net/"
+            document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Germany.SiaSky.net</a></li>'
+            
+            url = "/player?s=<?= htmlspecialchars($_GET['s']) ?>&portal=https://siasky.dev/"
+            document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">SiaSky.dev</a></li>'
+
+            
         }
     }
     xhttp.open("GET", "https://siastats.info/dbs/skynet_current.json", true);
