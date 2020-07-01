@@ -32,9 +32,9 @@
 							<p><?= $row['description'] ?></p>
 							<p>Token: 
 								<span class="streams-token"><?= $row['token'] ?></span><span>...</span>
-								<button class="btn btn-grey4 btn-sm" onclick="copy('<?= $row['token'] ?>')">Copy</button> <?php
+								<button class="btn btn-grey4 btn-sm" onclick="copy('<?= $row['token'] ?>')">Copy token</button> <?php
 								if ($row['started'] == 1 && $row['finished'] == 0) { ?>
-									<button class="btn btn-danger btn-sm" onclick="finish_stream('<?= $row['streamid'] ?>', this)">Finish</button> <?php
+									<button class="btn btn-danger btn-sm" onclick="finish_stream('<?= $row['streamid'] ?>', this)">Finish livestream</button> <?php
 								} ?>
 							</p>
 						</div>

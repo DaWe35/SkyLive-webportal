@@ -89,7 +89,7 @@ nav a p {
 .video-cell p span {
     color: var(--grey4);
     overflow: hidden;
-    max-width: 100px;
+    max-width: 45px;
     display: inline-grid;
 }
 

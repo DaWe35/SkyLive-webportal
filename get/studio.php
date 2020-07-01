@@ -6,6 +6,8 @@ if (!isset($_SESSION['id']) || empty($_SESSION['id'])) {
     exit();
 }
 
+$pagetitle = 'SkyLive studio';
+
 if (SUBPAGE == '') {
     include 'get/studio/index.php';
 } else {
