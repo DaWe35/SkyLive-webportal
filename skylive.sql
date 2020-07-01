@@ -22,22 +22,22 @@ CREATE TABLE `chunks` (
   `resolution` enum('1080','1080@60','720','720@60','360','360@60','original') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-
 CREATE TABLE `newsletter` (
   `email` varchar(63) COLLATE utf8_bin NOT NULL,
-  `subscribtion_time` int(11) UNSIGNED NOT NULL,
-  `ip` int(11) UNSIGNED NOT NULL
+  `subscribtion_time` int(11) UNSIGNED DEFAULT NULL,
+  `ip` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `stream` (
   `streamid` int(11) NOT NULL,
-  `token` varchar(255) COLLATE utf8_bin NOT NULL,
+  `token` varchar(128) COLLATE utf8_bin NOT NULL,
   `userid` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(128) COLLATE utf8_bin DEFAULT NULL,
   `description` text COLLATE utf8_bin,
   `scheule_time` int(11) UNSIGNED DEFAULT NULL,
-  `started` tinyint(1) NOT NULL,
-  `finished` tinyint(1) NOT NULL
+  `started` tinyint(1) NOT NULL DEFAULT '0',
+  `finished` tinyint(1) NOT NULL DEFAULT '0',
+  `visibility` enum('public','non-listed','deleted') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `users` (
@@ -51,7 +51,6 @@ CREATE TABLE `users` (
   `badlogin` tinyint(4) DEFAULT '0',
   `loginban` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 ALTER TABLE `chunks`
   ADD PRIMARY KEY (`id`);
@@ -70,16 +69,10 @@ ALTER TABLE `chunks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1594;
 
 ALTER TABLE `stream`
-  MODIFY `streamid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `streamid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
-ALTER TABLE `newsletter` CHANGE `subscribtion_time` `subscribtion_time` INT(11) UNSIGNED NULL DEFAULT NULL;
-
-ALTER TABLE `newsletter` CHANGE `ip` `ip` INT(11) UNSIGNED NULL DEFAULT NULL;
-
-ALTER TABLE `stream` CHANGE `token` `token` VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;
-ALTER TABLE `stream` CHANGE `title` `title` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL;
-ALTER TABLE `stream` CHANGE `started` `started` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `finished` `finished` TINYINT(1) NOT NULL DEFAULT '0';
-
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

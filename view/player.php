@@ -1,7 +1,9 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <link href="assets/vsg-skin.css" rel="stylesheet">
-
+    <link href="assets/vsg-skin.css" rel="stylesheet"> <?php
+    if ($stream['visibility'] != 'public') { ?>
+        <meta name="robots" content="noindex" /> <?php
+    } ?>
 </head>
 <body class="player chatmode">
     
