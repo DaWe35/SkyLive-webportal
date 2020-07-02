@@ -40,17 +40,26 @@ CREATE TABLE `stream` (
   `visibility` enum('public','non-listed','deleted') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `token` (
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `type` enum('password_reset','email_confirm') COLLATE utf8_unicode_ci NOT NULL,
+  `expire` int(10) UNSIGNED NOT NULL,
+  `token` varchar(127) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(127) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(63) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(127) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar` varchar(127) NOT NULL,
+  `avatar` varchar(127) DEFAULT NULL,
   `reg_time` int(10) UNSIGNED NOT NULL,
   `rank` enum('unverified','user','admin') DEFAULT 'unverified',
   `badlogin` tinyint(4) DEFAULT '0',
   `loginban` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 ALTER TABLE `chunks`
   ADD PRIMARY KEY (`id`);
@@ -61,18 +70,21 @@ ALTER TABLE `newsletter`
 ALTER TABLE `stream`
   ADD PRIMARY KEY (`streamid`);
 
+ALTER TABLE `token`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 
 ALTER TABLE `chunks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1594;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `stream`
-  MODIFY `streamid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `streamid` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

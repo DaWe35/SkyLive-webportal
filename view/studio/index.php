@@ -22,7 +22,7 @@
 					<div class="video-row">
 						<div class="video-cell">
 							<a href="/player?s=<?= $row['streamid'] ?>">
-								<img class="" src="<?= image_print($row['streamid'], 600) ?>" alt="" />
+								<img src="<?= image_print($row['streamid'], 600) ?>" alt="" />
 							</a>
 						</div>
 						<div class="video-cell">
@@ -47,6 +47,26 @@
 							</p>
 						</div>
 						
+					</div> <?php
+					$inwhile = 1;
+				}
+				if (!isset($inwhile)) { ?>
+					<div class="m-auto" style="width: 400px;">
+						<h3 class="pt-5">Start your first stream:</h3>
+						<ul style="padding-left: 14px;">
+							<li>
+								<a href="https://github.com/DaWe35/SkyLive-GUI/releases" class="text-white">Download SkyLive GUI</a>
+							</li>
+							<li>
+								<a href="https://obsproject.com/hu/download" class="text-white">Download OBS</a> <small>*restreaming doesn't need OBS</small>
+							</li>
+							<li>
+								<a href="https://github.com/DaWe35/SkyLive#setup-obs" class="text-white">Setup OBS</a>
+							</li>
+							<li>
+								<a href="/studio/new-stream" class="text-white">Create new stream</a>
+							</li>
+						</ul>
 					</div> <?php
 				}
 				$stmt_streams = null; ?>

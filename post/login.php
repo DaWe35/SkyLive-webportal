@@ -12,12 +12,11 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$row) {
     exit('User not found');
-} else if ($row['rank'] == 'unverified') {
+} else /* if ($row['rank'] == 'unverified') {
     exit('This account is not verified');
-} else if ($row['loginban'] > date("Y-m-d H:i:s")) {
+} else*/ if ($row['loginban'] > date("Y-m-d H:i:s")) {
     exit('Account suspended until ' . $row['loginban']);
 } else if (password_verify($_POST['password'], $row['password'])) {
-    echo $row['password'];
     $_SESSION['id'] = $row['id'];
     $_SESSION['rank'] = $row['rank'];
     $_SESSION['name'] = $row['name'];
