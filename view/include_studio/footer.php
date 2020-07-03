@@ -10,5 +10,5 @@
     
 </footer> -->
 
-<script src="assets/popper.min.js"></script>
-<script src="assets/bootstrap.min.js"></script>
+<script src="/assets/popper.min.js"></script>
+<script src="/assets/bootstrap.min.js"></script>
