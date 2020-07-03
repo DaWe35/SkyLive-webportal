@@ -85,6 +85,7 @@ ALTER TABLE `stream`
 
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `stream` CHANGE `visibility` `visibility` ENUM('public','non-listed','deleted','private') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL; 
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

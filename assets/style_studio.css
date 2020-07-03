@@ -47,7 +47,9 @@ input[type="radio"]+label {
 input[type="radio"] {
     display: none;
 }
-
+#private_notice {
+    display: none;
+}
 .video-row img, .video-row-img-height {
     height: 150px;
 }

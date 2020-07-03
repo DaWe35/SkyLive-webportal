@@ -16,10 +16,13 @@
 
 			<p>
 				Visibility:
-				<input type="radio" id="public" name="visibility" value="public" required <?= $edit['visibility'] == 'public' ? 'checked' : '' ?>>
+				<input type="radio" id="public" name="visibility" value="public" onchange="toggle_private_notice()" required <?= $edit['visibility'] == 'public' ? 'checked' : '' ?>>
 				<label for="public">Public</label>
-				<input type="radio" id="non-listed" name="visibility" value="non-listed" <?= $edit['visibility'] == 'non-listed' ? 'checked' : '' ?>>
+				<input type="radio" id="non-listed" name="visibility" value="non-listed" onchange="toggle_private_notice()" <?= $edit['visibility'] == 'non-listed' ? 'checked' : '' ?>>
 				<label for="non-listed">Non-listed</label>
+				<input type="radio" id="private" name="visibility" value="private" onchange="toggle_private_notice()" <?= $edit['visibility'] == 'private' ? 'checked' : '' ?>>
+				<label for="private">Private</label>
+				<small id="private_notice">Files on Skynet are public, be careful!</small>
 			</p>
 			<input type="hidden" name="edit_id" required value="<?= isset($edit_id) ? $edit_id : '' ?>">
 			<p class="text-center">
@@ -51,5 +54,13 @@
 		let scheule_time_local = Date.parse(document.getElementById('scheule_time_local').value) / 1000;
 		let scheule_time = scheule_time_local;
 		document.getElementById('scheule_time').value = scheule_time;
+	}
+
+	function toggle_private_notice() {
+		if ($('input#private').is(':checked')) {
+			$('#private_notice').css('display', 'initial')
+		} else {			
+			$('#private_notice').css('display', 'none')
+		}
 	}
 </script>

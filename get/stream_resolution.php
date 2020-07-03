@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 header("Content-Type: text/plain");
 header("Access-Control-Allow-Origin: *");
@@ -10,7 +11,7 @@ if (!isset($_GET['resolution']) || empty($_GET['resolution'])) {
     exit('Empty GET value: resolution');
 }
 
-$stmt = $db->prepare("SELECT `streamid`, `userid`, `title`, `description`, `scheule_time`, `started`, `finished` FROM `stream` WHERE streamid = ? LIMIT 1");
+$stmt = $db->prepare("SELECT `streamid`, `userid`, `title`, `description`, `scheule_time`, `started`, `finished`, visibility FROM `stream` WHERE streamid = ? LIMIT 1");
 if (!$stmt->execute([$_GET['streamid']])) {
     exit('Database error');
 }
@@ -20,6 +21,16 @@ $stmt = null;
 if (!isset($stream['streamid'])) {
     http_response_code(404);
     exit('Stream not found');
+}
+
+if ($stream['visibility'] == 'deleted') {
+    http_response_code(404);
+    exit('Stream has removed');
+}
+
+if ($stream['visibility'] == 'private' && (!isset($_SESSION['id'] ) || $_SESSION['id'] != $stream['userid'])) {
+    http_response_code(403);
+    exit('Access denied, please log in if this is your content');
 }
 
 if (isset($_GET['portal']) && !empty($_GET['portal'])) {

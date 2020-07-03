@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if (isset($_GET['portal']) && !empty($_GET['portal'])) {
     $portal = htmlspecialchars($_GET['portal']);
@@ -12,6 +13,11 @@ if (!$stmt->execute([$_GET['s']])) {
 }
 $stream = $stmt->fetch(PDO::FETCH_ASSOC);
 $stmt = null;
+
+if ($stream['visibility'] == 'private' && (!isset($_SESSION['id'] ) || $_SESSION['id'] != $stream['userid'])) {
+    http_response_code(403);
+    exit('Access denied, please log in if this is your content');
+}
 
 $stmt = $db->prepare("SELECT name, avatar FROM users WHERE id = ? LIMIT 1");
 if (!$stmt->execute([$stream['userid']])) {
