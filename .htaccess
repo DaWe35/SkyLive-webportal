@@ -3,12 +3,8 @@ Options -Indexes
 RewriteEngine On
 RewriteRule ^.git/ - [L,R=404]
 
-RewriteCond %{HTTP_HOST} ^skylive\.coolhd\.hu [NC]
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://skylive.coolhd.hu/$1 [R,L]
-
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 RewriteCond %{REQUEST_URI} !=/index.php
 RewriteCond %{REQUEST_URI} !.*\.png$ [NC]
 RewriteCond %{REQUEST_URI} !.*\.jpg$ [NC]
