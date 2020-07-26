@@ -49,11 +49,11 @@ if (isset($_GET['portal']) && !empty($_GET['portal'])) {
 <?php
 if ($stream['finished'] == 0) {
     echo "#EXTINF:10.000000,\n";
-    echo $portal . "/AABa67V-0McynqzloU6CBvHECTY-R8mm6SaB1Smr2pkU1g\n";
+    echo $portal . "/AABa67V-0McynqzloU6CBvHECTY-R8mm6SaB1Smr2pkU1g/\n";
     echo "#EXTINF:10.000000,\n";
-    echo $portal . "/_B2H5ZepchMfdYj1BLjlkZqsGUEhXEA-rxi--80i-1mEGA\n";
+    echo $portal . "/_B2H5ZepchMfdYj1BLjlkZqsGUEhXEA-rxi--80i-1mEGA/\n";
     echo "#EXTINF:4.000000,\n";
-    echo $portal . "/PAO6OSO_yznBInoTofjORkLxBwxIRuPMzg3C3QwFaDcjKg\n";
+    echo $portal . "/PAO6OSO_yznBInoTofjORkLxBwxIRuPMzg3C3QwFaDcjKg/\n";
     echo "#EXT-X-DISCONTINUITY\n";
 }
 
@@ -67,7 +67,7 @@ while ($chunk = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "#EXT-X-DISCONTINUITY\n";
     }
     echo "#EXTINF:{$chunk['length']},\n";
-    echo "{$portal}/{$chunk['skylink']}\n";
+    echo "{$portal}/{$chunk['skylink']}/\n";
     $start_chunk = false;
 }
 $stmt = null;
