@@ -230,3 +230,7 @@ footer .built-with-sia-logo {
 	margin-top: -17px;
 	height: 60px;
 }
+
+.video-thumbnail-max-16-9 {
+	width: auto;
+}

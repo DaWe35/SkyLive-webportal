@@ -43,7 +43,7 @@ $player = URL . 'player?s=';
 		while ($row = $streams_stmt->fetch(PDO::FETCH_ASSOC)) { ?>
 			<div class="col-md-3 mb-5">
 				<div class="card h-100 shadow">
-					<a href="<?= $player . $row['streamid']?>" class="position-relative"> <?php
+					<a href="<?= $player . $row['streamid']?>" class="position-relative text-center"> <?php
 						date_default_timezone_set('UTC');
 						$current = time();
 						if ($row['started'] == 0) { ?>
@@ -51,7 +51,7 @@ $player = URL . 'player?s=';
 						} else if ($row['finished'] == 0) { ?>
 							<div class="ribbon ribbon-red">On air</div> <?php
 						} ?>
-						<img class="card-img-top" src="<?= image_print($row['streamid'], 600) ?>" alt="">
+						<img class="card-img-top video-thumbnail-max-16-9" src="<?= image_print($row['streamid'], 600) ?>" alt="">
 					</a>
 					<div class="card-body">
 						<a href="<?= $player . $row['streamid']?>">
@@ -70,3 +70,12 @@ $player = URL . 'player?s=';
 
 </div>
 <!-- /.container -->
+
+<script>
+
+$('.video-thumbnail-max-16-9').each(function(i, obj) {
+    let width = $(obj).parent().width()
+	let max_height = width / 16 * 9
+	$(obj).css('max-height', max_height + 'px')
+});
+</script>
