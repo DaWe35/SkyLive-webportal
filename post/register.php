@@ -27,11 +27,12 @@ $options = [
 $password = password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
 
 $regtime=time();
+$name = htmlspecialchars($_POST['name']);
 
 $sqlData = [
     'email' => $_POST['email'],
     'password' => $password,
-    'name' => $_POST['name'],
+    'name' => $name,
     'regtime' => $regtime
 ];
 $sql = "INSERT INTO users (email, password, name, reg_time) VALUES (:email, :password, :name, :regtime)";
@@ -42,7 +43,7 @@ if ($stmt->execute($sqlData)) {
     session_start();
     $_SESSION['id'] = $db->lastInsertId();
     $_SESSION['rank'] = 'unverified';
-    $_SESSION['name'] = $_POST['name'];
+    $_SESSION['name'] = $name;
     header("Location: studio");
 } else {
     echo 'SQL error: sign up insert failed';

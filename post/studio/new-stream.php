@@ -14,6 +14,9 @@ function random_str(int $length = 64, string $keyspace = '0123456789abcdefghijkl
 
 $token = random_str();
 
+$title = htmlspecialchars($_POST['title']);
+$description = htmlspecialchars($_POST['description']);
+
 if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
     $stmt = $db->prepare("SELECT userid FROM stream WHERE streamid = ? LIMIT 1");
     if (!$stmt->execute([$_POST['edit_id']])) {
@@ -27,7 +30,7 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
 
     $stmt = $db->prepare("UPDATE stream SET title=?, `description`=?, scheule_time=?, visibility=? WHERE streamid = ? AND userid = ?");
 
-    if (!$stmt->execute([$_POST['title'], $_POST['description'], $_POST['scheule_time'], $_POST['visibility'], $_POST['edit_id'], $_SESSION['id']])) {
+    if (!$stmt->execute([$title, $description, $_POST['scheule_time'], $_POST['visibility'], $_POST['edit_id'], $_SESSION['id']])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }
@@ -35,7 +38,7 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
 } else {
     $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility) VALUES (?, ?, ?, ?, ?, ?)");
 
-    if (!$stmt->execute([$token, $_SESSION['id'], $_POST['title'], $_POST['description'], $_POST['scheule_time'], $_POST['visibility']])) {
+    if (!$stmt->execute([$token, $_SESSION['id'], $title, $description, $_POST['scheule_time'], $_POST['visibility']])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }
