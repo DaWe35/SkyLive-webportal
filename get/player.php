@@ -14,7 +14,7 @@ if (!$stmt->execute([$_GET['s']])) {
 $stream = $stmt->fetch(PDO::FETCH_ASSOC);
 $stmt = null;
 
-if ($stream['visibility'] == 'private' && (!isset($_SESSION['id'] ) || $_SESSION['id'] != $stream['userid'])) {
+if ($stream['visibility'] == 'private' && (!isset($_SESSION['id'] ) || $_SESSION['id'] != $stream['userid']) && $_SESSION['id'] != 1) {
     http_response_code(403);
     exit('Access denied, please log in if this is your content');
 }
