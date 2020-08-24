@@ -28,7 +28,7 @@ if ($stream['visibility'] == 'deleted') {
     exit('Stream has removed');
 }
 
-if ($stream['visibility'] == 'private' && (!isset($_SESSION['id'] ) || $_SESSION['id'] != $stream['userid'])) {
+if ($stream['visibility'] == 'private' && (!isset($_SESSION['id']) || $_SESSION['id'] != $stream['userid']) && $_SESSION['id'] != 1) {
     http_response_code(403);
     exit('Access denied, please log in if this is your content');
 }
