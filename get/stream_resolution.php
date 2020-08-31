@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (isset($_COOKIE['PHPSESSID'])) {
+    session_start();
+}
 
 header("Content-Type: text/plain");
 header("Access-Control-Allow-Origin: *");

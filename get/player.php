@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (isset($_COOKIE['PHPSESSID'])) {
+    session_start();
+}
 
 if (isset($_GET['portal']) && !empty($_GET['portal'])) {
     $portal = htmlspecialchars($_GET['portal']);
