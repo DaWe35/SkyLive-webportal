@@ -52,7 +52,7 @@
     
     // Display warning on IOS
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (iOS && <?= $stream['streamid'] ?> == 0) {
+    if (iOS && <?= $stream['finished'] ?> == 0) {
         $('#ios_warning').css('display', 'initial')
     }
 
