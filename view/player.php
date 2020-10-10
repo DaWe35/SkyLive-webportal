@@ -22,6 +22,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-9 p-0">
+                <div id="ios_warning">
+                    Sorry, IOS  does not support HLS streaming.<br>
+                    <a href="vlc-x-callback://x-callback-url/stream?url=<?= $stream_url ?>">Open in VLC</a><br>
+                    If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
+                </div>
                 <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>">Sorry, HTML5 video is not supported in your browser</video>
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
@@ -44,6 +49,12 @@
     </button> -->
     
     <script>
+    
+    // Display warning on IOS
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (iOS && <?= $stream['streamid'] ?> == 0) {
+        $('#ios_warning').css('display', 'initial')
+    }
 
     // Create HLS video element
     var video = document.getElementById('my_video_1');

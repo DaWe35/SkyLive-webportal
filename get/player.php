@@ -9,7 +9,7 @@ if (isset($_GET['portal']) && !empty($_GET['portal'])) {
     $portal = '';
 }
 
-$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE streamid = ? LIMIT 1");
+$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility, finished FROM stream WHERE streamid = ? LIMIT 1");
 if (!$stmt->execute([$_GET['s']])) {
     exit('Database error');
 }
