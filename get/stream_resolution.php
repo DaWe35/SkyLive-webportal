@@ -30,49 +30,30 @@ if ($stream['visibility'] == 'deleted') {
     exit('Stream has removed');
 }
 
+
+// protect private streams
 if ($stream['visibility'] == 'private' && (!isset($_SESSION['id']) || $_SESSION['id'] != $stream['userid']) && $_SESSION['id'] != 1) {
     http_response_code(403);
     exit('Access denied, please log in if this is your content');
 }
 
+// set portal
 if (isset($_GET['portal']) && !empty($_GET['portal'])) {
     $portal = filter_var($_GET['portal'], FILTER_SANITIZE_URL);
 } else {
     $portal = 'https://siasky.net';
 }
 
-?>
-#EXTM3U
-#EXT-X-VERSION:3
-#EXT-X-TARGETDURATION:10
-#EXT-X-MEDIA-SEQUENCE:0
-#EXT-X-PLAYLIST-TYPE:VOD
 
-<?php
-if ($stream['finished'] == 0) {
-    echo "#EXTINF:10.000000,\n";
-    echo $portal . "/AABa67V-0McynqzloU6CBvHECTY-R8mm6SaB1Smr2pkU1g/\n";
-    echo "#EXTINF:10.000000,\n";
-    echo $portal . "/_B2H5ZepchMfdYj1BLjlkZqsGUEhXEA-rxi--80i-1mEGA/\n";
-    echo "#EXTINF:4.000000,\n";
-    echo $portal . "/PAO6OSO_yznBInoTofjORkLxBwxIRuPMzg3C3QwFaDcjKg/\n";
-    echo "#EXT-X-DISCONTINUITY\n";
-}
+include('model/stream.php');
 
-$stmt = $db->prepare("SELECT `id`, `streamid`, `length`, `skylink`, `is_first_chunk` FROM `chunks` WHERE streamid = ? AND resolution = ? ORDER BY id ASC");
-if (!$stmt->execute([$stream['streamid'], $_GET['resolution']])) {
-    exit('Database error');
+
+if ($stream['streamid'] == 74) { // 0-24 music live
+    $videos = [40, 41, 18];
+    print_loop_stream($videos, $stream, $portal);
+} else {
+    print_stream($stream, $portal);
 }
-$start_chunk = true;
-while ($chunk = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if ($chunk['is_first_chunk'] == 1 && $start_chunk == false) {
-        echo "#EXT-X-DISCONTINUITY\n";
-    }
-    echo "#EXTINF:{$chunk['length']},\n";
-    echo "{$portal}/{$chunk['skylink']}/\n";
-    $start_chunk = false;
-}
-$stmt = null;
 
 
 if ($stream['finished'] == 1) {
