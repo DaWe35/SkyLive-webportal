@@ -49,7 +49,7 @@ include('model/stream.php');
 
 
 if ($stream['streamid'] == 74) { // 0-24 music live
-    $videos = [40, 41, 18];
+    $videos = [41, 40, 18];
     print_loop_stream($videos, $stream, $portal);
 } else {
     print_stream($stream, $portal);

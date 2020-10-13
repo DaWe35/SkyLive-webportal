@@ -93,7 +93,7 @@ function print_loop_stream($videos, $stream, $portal) {
 			}
 		}
 		$start_chunk = false;
-		if ($chunk_printed == 6) {
+		if ($chunk_printed == 3) {
 			return true;
 		}
 		
