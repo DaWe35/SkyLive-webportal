@@ -11,7 +11,7 @@ if (isset($_GET['portal']) && !empty($_GET['portal'])) {
 }
 
 //total number of videos
-$stmt = $db->prepare("SELECT COUNT(id) FROM stream");
+$stmt = $db->prepare("SELECT COUNT(streamid) FROM stream");
 if (!$stmt->execute()) {
 	exit('Database error');
 }

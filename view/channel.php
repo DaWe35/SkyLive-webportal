@@ -2,6 +2,7 @@
 <script src="assets/popper.min.js"></script>
 <script src="assets/bootstrap.min.js"></script>
 <script>
+	// Transforms seconds to hh:mm:ss.
 	function toHMS(seconds) {
 		var s = seconds.toFixed(0);
 		var result = ":";
@@ -127,7 +128,7 @@
 	</ul>
 </div>
 <a href="<?= URL ?>" class="logo"><button class="play mini-logo-play"></button>&nbsp; SkyLive Channel</a>
-<form id="form" class="container-fluid" method="get" action="<?= $_SERVER['PHP_SELF'] ?>">
+<form id="form" class="container-fluid" method="get" action="/channel">
 	<input id="user" type="hidden" name="user" value="<?= $userid ?>"></input>
 	<input id="numperpage" type="hidden" name="numperpage" value="<?= $thumbs_per_page ?>"></input>
 	<input id="current" type="hidden" name="current" value="<?= $current ?>"></input>

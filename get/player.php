@@ -21,7 +21,7 @@ if ($stream['visibility'] == 'private' && (!isset($_SESSION['id']) || $_SESSION[
     exit('Access denied, please log in if this is your content');
 }
 
-$stmt = $db->prepare("SELECT name, avatar FROM users WHERE id = ? LIMIT 1");
+$stmt = $db->prepare("SELECT name, avatar, id FROM users WHERE id = ? LIMIT 1");
 if (!$stmt->execute([$stream['userid']])) {
     exit('Database error');
 }
