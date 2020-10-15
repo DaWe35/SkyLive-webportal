@@ -1,9 +1,24 @@
 <?php
+if (isset($_GET['user']) && !empty($_GET['user'])) {
+	$userid = htmlspecialchars($_GET['user']);
+	if ($userid < 1) {
+		$userid = 0;
+	}
+} else {
+	$userid = 0;
+}
 
-//total number of videos
-$stmt = $db->prepare("SELECT COUNT(streamid) FROM stream");
-if (!$stmt->execute()) {
-	exit('Database error');
+// get total number of videos
+if ($userid == 0) { // count all videos
+	$stmt = $db->prepare("SELECT COUNT(streamid) FROM stream WHERE visibility = 'public'");
+	if (!$stmt->execute()) {
+		exit('Database error');
+	}
+} else { // count user's videos
+	$stmt = $db->prepare("SELECT COUNT(streamid) FROM stream WHERE visibility = 'public' AND userid = ?");
+	if (!$stmt->execute([$userid])) {
+		exit('Database error');
+	}
 }
 $num_videos = $stmt->fetch(PDO::FETCH_NUM)[0];
 $stmt = null;
@@ -20,25 +35,15 @@ if (isset($_GET['numperpage']) && !empty($_GET['numperpage'])) {
 }
 
 //current page
-if (isset($_GET['current']) && !empty($_GET['current'])) {
-	$current = htmlspecialchars($_GET['current']);
-	if (($current < 1) or ($current > ceil($num_videos / $thumbs_per_page))) {
-		$current = 1;
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+	$page = htmlspecialchars($_GET['page']);
+	if (($page < 1) or ($page > ceil($num_videos / $thumbs_per_page))) {
+		$page = 1;
 	}
 } else {
-	$current = 1;
+	$page = 1;
 }
-$offset = $thumbs_per_page * ($current - 1);
-
-//sort by user
-if (isset($_GET['user']) && !empty($_GET['user'])) {
-	$userid = htmlspecialchars($_GET['user']);
-	if ($userid < 1) {
-		$userid = 0;
-	}
-} else {
-	$userid = 0;
-}
+$offset = $thumbs_per_page * ($page - 1);
 
 if ($userid == 0) { //select all users
 	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE visibility = 'public' ORDER BY scheule_time DESC, streamid DESC LIMIT $thumbs_per_page OFFSET $offset");
@@ -77,8 +82,8 @@ if ($userid == 0) { //select all users
 	$names = array();
 	$avatars = array();
 	$ids = array();
-	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE userid = $userid AND visibility = 'public' ORDER BY scheule_time DESC, streamid DESC LIMIT $thumbs_per_page OFFSET $offset");
-	if (!$stmt->execute()) {
+	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE userid = ? AND visibility = 'public' ORDER BY scheule_time DESC, streamid DESC LIMIT $thumbs_per_page OFFSET $offset");
+	if (!$stmt->execute([$userid])) {
 		exit('Database error');
 	}
 	$stream = $stmt->fetchAll(PDO::FETCH_ASSOC);

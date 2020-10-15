@@ -36,8 +36,8 @@
 		if (b.name == 'numperpage') {
 			var n = document.getElementById('numperpage');
 			n.value = b.value;
-		} else if (b.name == 'current') {
-			var c = document.getElementById('current');
+		} else if (b.name == 'page') {
+			var c = document.getElementById('page');
 			if (b.value == 'Prev') {
 				c.value = parseInt(c.value, 10) - 1;
 			} else if (b.value == 'Next') {
@@ -131,7 +131,7 @@
 <form id="form" class="container-fluid" method="get" action="/channel">
 	<input id="user" type="hidden" name="user" value="<?= $userid ?>"></input>
 	<input id="numperpage" type="hidden" name="numperpage" value="<?= $thumbs_per_page ?>"></input>
-	<input id="current" type="hidden" name="current" value="<?= $current ?>"></input>
+	<input id="page" type="hidden" name="page" value="<?= $page ?>"></input>
 	<div class="row mt-4 mb-1">
 		<div class="d-flex col-1">
 			<div class="dropdown">
@@ -145,11 +145,11 @@
 		</div>
 		<div class="d-flex col-11 justify-content-end">
 			<div class="btn-group btn-group-sm">
-				<button type="button" name="current" onclick="submitForm(this)" class="btn btn-secondary" <?= $current == 1 ? 'disabled' : '' ?> value="Prev">Prev</button>
+				<button type="button" name="page" onclick="submitForm(this)" class="btn btn-secondary" <?= $page == 1 ? 'disabled' : '' ?> value="Prev">Prev</button>
 				<?php for ($i = 0; $i < $num_videos / $thumbs_per_page; $i++) { ?>
-					<button type="button" name="current" onclick="submitForm(this)" class="btn btn-secondary <?= $i == $current - 1 ? 'active' : '' ?>" value="<?= $i + 1 ?>"><?= $i + 1 ?></button>
+					<button type="button" name="page" onclick="submitForm(this)" class="btn btn-secondary <?= $i == $page - 1 ? 'active' : '' ?>" value="<?= $i + 1 ?>"><?= $i + 1 ?></button>
 				<?php } ?>
-				<button type="button" name="current" onclick="submitForm(this)" class="btn btn-secondary" <?= $current == ceil($num_videos / $thumbs_per_page) ? 'disabled' : '' ?> value="Next">Next</button>
+				<button type="button" name="page" onclick="submitForm(this)" class="btn btn-secondary" <?= $page == ceil($num_videos / $thumbs_per_page) ? 'disabled' : '' ?> value="Next">Next</button>
 			</div>
 		</div>
 	</div>
