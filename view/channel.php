@@ -1,6 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="assets/popper.min.js"></script>
-<script src="assets/bootstrap.min.js"></script>
 <script>
 	// Transforms seconds to hh:mm:ss.
 	function toHMS(seconds) {
@@ -103,9 +102,10 @@
 		opacity: 0.7;
 	}
 
-	.title, .user {
+	.title, .user, .title:hover, .user:hover  {
 		color: #aaa;
 		font-size: 0.8em;
+		text-decoration: none;
 	}
 
 	.title {
@@ -115,19 +115,35 @@
 	.user:hover {
 		cursor: pointer;
 	}
+
+	body .bg-gradient {
+		background: rgb(112,36,89);
+		background: linear-gradient(121deg, rgba(112, 36, 89, 0.8) 0%, rgba(0, 0, 0, 0) 90%); 
+	}
 </style>
 
-<div id="portal-switcher">
-	<input id="check01" type="checkbox" name="menu" />
-	<label for="check01" class="noselect" style="opacity: 0.7;">
-		<span id="portal-switch-text-long">Change Skynet portal server ▼</span>
-		<span id="portal-switch-text-short">Portal ▼</span>
-	</label>
-	<ul class="submenu" id="portal_list">
-		<li id="loading_portals"><a href="#">Loading portals...</a></li>
-	</ul>
-</div>
-<a href="<?= URL ?>" class="logo"><button class="play mini-logo-play"></button>&nbsp; SkyLive Channel</a>
+
+
+
+<a href="<?= URL ?>" class="logo position-absolute"><button class="play mini-logo-play"></button>&nbsp; SkyLive</a>
+<header class="bg-gradient pt-5 pb-2">
+	<div class="container h-100">
+		<div class="row h-100 align-items-center">
+			<div class="col-lg-9">
+				<h1 class="display-4 text-white font-weight-bold mt-3">
+					<?= $userid != 0 ? $names[0] : 'all videos on Skylive' ?>
+				</h1>
+				<!-- <p class="lead mb-5 text-white-50">channel<br> -->
+			</div>
+			<div href="register" class="position-absolute text-white" style="top: 5px; right: 15px;">
+				<a class="text-white" href="register">Get beta access</a> | 
+				<a class="text-white" href="login">Login</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+
 <form id="form" class="container-fluid" method="get" action="/channel">
 	<input id="user" type="hidden" name="user" value="<?= $userid ?>"></input>
 	<input id="numperpage" type="hidden" name="numperpage" value="<?= $thumbs_per_page ?>"></input>
@@ -160,9 +176,9 @@
 			<div class="col-sm-6 col-md-4 col-lg-3">
 				<div class="row">
 					<div class="col-12 mt-3">
-						<a href="https://skylive.coolhd.hu/player?s=<?= $stream[$row]['streamid'] ?>">
+						<a href="/player?s=<?= $stream[$row]['streamid'] ?>">
 							<div class="video-container col-12" onmouseover="previewVideo(this)" onmouseout="stopPreview(this)" id="div<?= $row ?>">
-								<video class="rounded-lg" muted onloadedmetadata="displayDuration(this)" poster="<?= 'https://skylive.coolhd.hu/thumbnails/' . $stream[$row]['streamid'] . '_300.jpg' ?>" id="video<?= $row ?>">
+								<video class="rounded-lg" muted onloadedmetadata="displayDuration(this)" poster="<?= '/thumbnails/' . $stream[$row]['streamid'] . '_300.jpg' ?>" id="video<?= $row ?>">
 									Your browser does not support video.
 								</video>
 								<span class="play preview"></span>
@@ -176,8 +192,8 @@
 						<img class="img-fluid rounded-circle" src="<?= $avatars[$row] ?>" alt="">
 					</div>
 					<div class="pl-0 pr-4 col-9">
-						<p class="title mb-2"><?= $stream[$row]['title'] ?></p>
-						<p class="user mb-2" name="user" value="<?= $ids[$row] ?>" onclick="submitForm(this)"><?= $names[$row] ?></p>
+						<a class="title mb-0" href="/player?s=<?= $stream[$row]['streamid'] ?>"><?= $stream[$row]['title'] ?></a><br>
+						<a class="user mb-2" href="/channel?user=<?= $ids[$row] ?>"><?= $names[$row] ?></a>
 					</div>
 				</div>
 			</div>
@@ -185,43 +201,13 @@
 				var video = document.getElementById('<?= "video" . $row ?>');
 				if (Hls.isSupported()) {
 					var hls = new Hls();
-					hls.loadSource('https://skylive.coolhd.hu/stream.m3u8?streamid=<?= $stream[$row]["streamid"] ?>');
+					hls.loadSource('/stream.m3u8?streamid=<?= $stream[$row]["streamid"] ?>');
 					hls.attachMedia(video);
 				}
 				else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-					video.src = 'https://skylive.coolhd.hu/stream.m3u8?streamid=<?= $stream[$row]["streamid"] ?>';
+					video.src = '/stream.m3u8?streamid=<?= $stream[$row]["streamid"] ?>';
 				}
 			</script>
 		<?php } ?>
 	</div>
 </div>
-<script>
-	// portal list
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("loading_portals").remove();
-			url = "/channel";
-			document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Automatic</a></li>';
-			let portals = JSON.parse(this.responseText);
-			portals.forEach(portal => {
-				portalSum = 0;
-				portal.files.forEach(filenumb => {
-					portalSum += filenumb;
-				});
-				if (portalSum != 0) {
-					url = "/channel?portal=" + portal.link;
-					document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">' + portal.name + '</a></li>';
-				}
-			});
-			url = "/channel?portal=https://helsinki.siasky.net";
-			document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Helsinki.SiaSky.net</a></li>';
-			url = "/channel?portal=https://germany.siasky.net/";
-			document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">Germany.SiaSky.net</a></li>';
-			url = "/channel?portal=https://siasky.dev/";
-			document.getElementById("portal_list").innerHTML += '<li><a href="' + url + '">SiaSky.dev</a></li>';
-		}
-	}
-	xhttp.open("GET", "https://siastats.info/dbs/skynet_current.json", true);
-	xhttp.send();
-</script>
