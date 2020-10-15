@@ -1,15 +1,5 @@
 <?php
 
-if (isset($_COOKIE['PHPSESSID'])) {
-	session_start();
-}
-
-if (isset($_GET['portal']) && !empty($_GET['portal'])) {
-	$portal = htmlspecialchars($_GET['portal']);
-} else {
-	$portal = '';
-}
-
 //total number of videos
 $stmt = $db->prepare("SELECT COUNT(streamid) FROM stream");
 if (!$stmt->execute()) {
@@ -19,7 +9,7 @@ $num_videos = $stmt->fetch(PDO::FETCH_NUM)[0];
 $stmt = null;
 
 //number of thumbnails per page
-$thumbs = array(5, 10, 20);
+$thumbs = array(8, 24, 100);
 if (isset($_GET['numperpage']) && !empty($_GET['numperpage'])) {
 	$thumbs_per_page = htmlspecialchars($_GET['numperpage']);
 	if (!in_array($thumbs_per_page, $thumbs)) {
@@ -51,7 +41,7 @@ if (isset($_GET['user']) && !empty($_GET['user'])) {
 }
 
 if ($userid == 0) { //select all users
-	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream LIMIT $thumbs_per_page OFFSET $offset");
+	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE visibility = 'public' ORDER BY scheule_time DESC, streamid DESC LIMIT $thumbs_per_page OFFSET $offset");
 	if (!$stmt->execute()) {
 		exit('Database error');
 	}
@@ -87,7 +77,7 @@ if ($userid == 0) { //select all users
 	$names = array();
 	$avatars = array();
 	$ids = array();
-	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE userid = $userid LIMIT $thumbs_per_page OFFSET $offset");
+	$stmt = $db->prepare("SELECT streamid, userid, title, description, scheule_time, visibility FROM stream WHERE userid = $userid AND visibility = 'public' ORDER BY scheule_time DESC, streamid DESC LIMIT $thumbs_per_page OFFSET $offset");
 	if (!$stmt->execute()) {
 		exit('Database error');
 	}
