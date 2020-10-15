@@ -37,7 +37,12 @@
         <div class="row player-title-bar">
             <div class="col-12 p-0">
                 <h1 class="text-light"><?= $stream['title'] ?></h1>
-                <p class="text-dark"><?= $channel['name'] ?></p>
+                <a href="/channel?user=<?= $channel['id'] ?>" class="text-decoration-none">
+                    <p class="text-secondary">
+                    
+                        <?= $channel['name'] ?>
+                    </p>
+                </a>
             </div>
         </div>
     </div>
