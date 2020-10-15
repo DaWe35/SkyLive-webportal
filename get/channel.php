@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['user']) && !empty($_GET['user'])) {
-	$userid = htmlspecialchars($_GET['user']);
+	$userid = intval($_GET['user']);
 	if ($userid < 1) {
 		$userid = 0;
 	}
@@ -26,7 +26,7 @@ $stmt = null;
 //number of thumbnails per page
 $thumbs = array(8, 24, 100);
 if (isset($_GET['numperpage']) && !empty($_GET['numperpage'])) {
-	$thumbs_per_page = htmlspecialchars($_GET['numperpage']);
+	$thumbs_per_page = intval($_GET['numperpage']);
 	if (!in_array($thumbs_per_page, $thumbs)) {
 		$thumbs_per_page = $thumbs[0];
 	}
@@ -36,7 +36,7 @@ if (isset($_GET['numperpage']) && !empty($_GET['numperpage'])) {
 
 //current page
 if (isset($_GET['page']) && !empty($_GET['page'])) {
-	$page = htmlspecialchars($_GET['page']);
+	$page = intval($_GET['page']);
 	if (($page < 1) or ($page > ceil($num_videos / $thumbs_per_page))) {
 		$page = 1;
 	}
