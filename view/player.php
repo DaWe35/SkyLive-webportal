@@ -30,7 +30,7 @@
                 <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>">Sorry, HTML5 video is not supported in your browser</video>
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
-                <iframe id="chat" src="https://napchat.hns.siasky.net/#main" allowTransparency="true"></iframe>
+                <iframe id="chat" src="https://skymessage.hns.siasky.net/#skylive" allowTransparency="true"></iframe>
             </div>
         </div>
 
