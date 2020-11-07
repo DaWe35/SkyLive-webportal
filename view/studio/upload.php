@@ -238,7 +238,7 @@
 			<label class="button" for="thumbnail" tabindex="3" onkeydown="keyDown(event, this)" onkeyup="keyUp(event, this)" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" onmousedown="mouseDown(this)" onmouseup="mouseUp(this)">Thumbnail</label>
 			<span id="image">None</span>
 		</p>
-		<p>Start time: 
+		<p style="display: none;">Start time: <!-- Unused -->
 			<input class="w3-input" type="datetime-local" id="scheule_time_local" onchange="change_timestamp()" required tabindex="4">
 			<input type="hidden" id="scheule_time" name="scheule_time" required value="<?= $edit['scheule_time'] ?>">
 		</p>

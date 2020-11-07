@@ -30,6 +30,13 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
         exit('Database error');
     }
     $streamid = $db->lastInsertId();
+
+    $stmt = $db->prepare("INSERT INTO chunks (`streamid`, `length`, `skylink`, `is_first_chunk`, `resolution`) VALUES (?, '0', ?, '1', 'original')");
+    if (!$stmt->execute([$streamid, $_POST['skylink']])) {
+        header('HTTP/1.0 500 Internal Server Error');
+        exit('Database error');
+    }
+    $stmt = null;
 }
 
 if (isset($_FILES["file"]["name"])) {

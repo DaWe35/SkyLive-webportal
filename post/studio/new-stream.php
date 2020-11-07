@@ -46,6 +46,7 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
         exit('Database error');
     }
     $streamid = $db->lastInsertId();
+
 }
 
 
