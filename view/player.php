@@ -27,7 +27,7 @@
                     <a href="vlc-x-callback://x-callback-url/stream?url=<?= $stream_url ?>">Open in VLC</a><br>
                     If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
                 </div>
-                <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>">Sorry, HTML5 video is not supported in your browser</video>
+                <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>" <?= isset($video_skylink) ? 'src="' . $portal . $video_skylink . '"' : '' ?> >Sorry, HTML5 video is not supported in your browser</video>
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
                 <iframe id="chat" src="https://skymessage.hns.siasky.net/#skylive" allowTransparency="true"></iframe>
@@ -53,35 +53,36 @@
         <span>Toggle chat</span>
     </button> -->
     
-    <script>
-    
-    // Display warning on IOS
-    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (iOS && <?= $stream['finished'] ?> == 0) {
-        $('#ios_warning').css('display', 'initial')
-    }
+    <script> <?php 
+    if ($stream['format'] != 'video') { ?>
+        // Display warning on IOS
+        var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (iOS && <?= $stream['finished'] ?> == 0) {
+            $('#ios_warning').css('display', 'initial')
+        }
 
-    // Create HLS video element
-    var video = document.getElementById('my_video_1');
-    if (Hls.isSupported()) {
-        var hls = new Hls();
-        hls.loadSource('<?= $stream_url ?>');
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-            video.play();
-        });
-    }
-    // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
-    // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element through the `src` property.
-    // This is using the built-in support of the plain video element, without using hls.js.
-    // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
-    // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
-    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = '<?= $stream_url ?>';
-        video.addEventListener('loadedmetadata', function() {
-            video.play();
-        });
-    }
+        // Create HLS video element
+        var video = document.getElementById('my_video_1');
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('<?= $stream_url ?>');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+            });
+        }
+        // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+        // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element through the `src` property.
+        // This is using the built-in support of the plain video element, without using hls.js.
+        // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+        // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = '<?= $stream_url ?>';
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+        } <?php
+    } ?>
 
     chatmode = 1
     function switchMode() {

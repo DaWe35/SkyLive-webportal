@@ -11,6 +11,7 @@
 	<!-- Section -->
 	<div class="w3-content text-white" id="photos">
 		<a type="button" class="btn btn-grey4 btn-outline-light btn-lg float-right" href="/studio/new-stream">+ Create a new stream</a>
+		<a type="button" class="btn btn-grey4 btn-outline-light btn-lg float-right mr-3" href="/studio/upload">↑ Upload video</a>
 		<h2 class="text-muted">My streams</h2>
 		<br>
 

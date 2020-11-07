@@ -216,6 +216,7 @@
 			<div id="upload-label">
 				<p>Upload multiple videos with the file dialog or by dragging and dropping videos into the box.</p>
 				<p>After a video is uploaded, you can edit its metadata such as title, description, etc., by clicking on the table row.</p>
+				<p>Upload limit: 1GB (if you need more, please contact me on Discord or GitHub.)</p>
 			</div>
 			<div id="upload-list">
 				<table id="upload-table"></table>
