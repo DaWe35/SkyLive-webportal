@@ -18097,4 +18097,7 @@ ALTER TABLE `stream`
 
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+  ALTER TABLE `stream` ADD `format` ENUM('hls','video') NOT NULL AFTER `visibility`; 
+
 COMMIT;

@@ -36,9 +36,9 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
     }
     $streamid = $_POST['edit_id'];
 } else {
-    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-    if (!$stmt->execute([$token, $_SESSION['id'], $title, $description, $_POST['scheule_time'], $_POST['visibility']])) {
+    if (!$stmt->execute([$token, $_SESSION['id'], $title, $description, $_POST['scheule_time'], $_POST['visibility'], $_POST['format']])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }

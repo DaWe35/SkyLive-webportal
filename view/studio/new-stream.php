@@ -25,6 +25,7 @@
 				<small id="private_notice">Files on Skynet are public, be careful!</small>
 			</p>
 			<input type="hidden" name="edit_id" required value="<?= isset($edit_id) ? $edit_id : '' ?>">
+			<input type="hidden" name="format" required value="hls">
 			<p class="text-center">
 				<button class="btn btn-grey4 btn-outline-light btn-lg" type="submit">
 					<i class="fa fa-save"></i> Save details
