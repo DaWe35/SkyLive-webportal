@@ -2,17 +2,22 @@
 <div class="w3-padding-large" id="main">
 
   <!-- Contact Section -->
-	<div class="w3-padding-64 w3-content w3-text-grey" id="contact">
-		<p class="text-center">Upload live event details, generate stream token:</p>
+	<div class="w3-padding-64 w3-content w3-text-grey" id="contact"> <?php
+		if ($edit['format'] == 'hls' || $edit['format'] == '') { ?>
+			<p class="text-center">Upload live event details, generate stream token:</p> <?php
+		} ?>
 
 		<form method="POST" class="new-stream-form" enctype="multipart/form-data">
 			<p><input class="w3-input" type="text" placeholder="Title" name="title" required value="<?= $edit['title'] ?>"></p>
 			<p><textarea class="w3-input" type="text" placeholder="Description" name="description" required><?= $edit['description'] ?></textarea></p>
-			<p>Thumbnail: <input class="w3-input" type="file" placeholder="Thumbnail" name="file"></p>
-			<p>Start time: 
-				<input class="w3-input" type="datetime-local" id="scheule_time_local" onchange="change_timestamp()" required>
-				<input type="hidden" id="scheule_time" name="scheule_time" required value="<?= $edit['scheule_time'] ?>">
-			</p>
+			<p>Thumbnail: <input class="w3-input" type="file" placeholder="Thumbnail" name="file"></p> <?php
+
+			if ($edit['format'] == 'hls' || $edit['format'] == '') { ?>
+				<p>Start time: 
+					<input class="w3-input" type="datetime-local" id="scheule_time_local" onchange="change_timestamp()" required>
+					<input type="hidden" id="scheule_time" name="scheule_time" required value="<?= $edit['scheule_time'] ?>">
+				</p> <?php
+			} ?>
 
 			<p>
 				Visibility:

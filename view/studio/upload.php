@@ -395,6 +395,10 @@
 		let thumb = document.createElement('td');
 		thumb.className = 'hidden-cell';
 		row.appendChild(thumb);
+		let edit_id = document.createElement('td');
+		edit_id.className = 'hidden-cell';
+		edit_id.innerText = '';
+		row.appendChild(edit_id);
 		return row;
 	}
 
@@ -480,7 +484,7 @@
 	//this function may be called more than one time: once a video is uploaded and a skylink is received, and every time user edits the metadata
 	function sendData(row, thumbnail) {
 		let req = new XMLHttpRequest();
-		req.open('POST', 'post/studio/upload.php', true); //PLS CHECK THE URL!!!
+		req.open('POST', '/studio/upload', true); //PLS CHECK THE URL!!!
 		let fd = new FormData();
 		fd.append('userid', uploadTable.childNodes[row].childNodes[0].innerText);
 		fd.append('skylink', uploadTable.childNodes[row].childNodes[1].innerText);
@@ -489,13 +493,27 @@
 		fd.append('scheule_time', uploadTable.childNodes[row].childNodes[5].innerText);
 		fd.append('visibility', uploadTable.childNodes[row].childNodes[7].innerText);
 		if (thumbnail && (document.getElementById('thumbnail').files.length != 0)) {
-			fd.append('thumbnail', document.getElementById('thumbnail').files[0]);
+			fd.append('file', document.getElementById('thumbnail').files[0]);
 		};
+		if (thumbnail != false) {
+			fd.append('edit_id', uploadTable.childNodes[row].childNodes[9].innerText);
+		}
+		req.onreadystatechange = function() { // Call a function when the state changes.
+			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+				if (parseInt(req.response) > 1) {
+					if (thumbnail) {
+						document.getElementById('submit-button').innerHTML = '<i class="fas fa-check" style="color: #0a0"></i>&nbsp;Changes saved!';
+						setTimeout(formHide, 1000);
+					};
+					
+					uploadTable.childNodes[row].childNodes[9].innerText = parseInt(req.response)
+				} else {
+					console.log(req.response)
+					alert('Update failed')
+				}
+			}
+		}
 		req.send(fd);
-		if (thumbnail) {
-			document.getElementById('submit-button').innerHTML = '<i class="fas fa-check" style="color: #0a0"></i>&nbsp;Changes saved!';
-			setTimeout(formHide, 1000);
-		};
 	}
 
 	//keyboard and mouse events

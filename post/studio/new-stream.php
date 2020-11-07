@@ -18,13 +18,16 @@ $title = htmlspecialchars($_POST['title']);
 $description = htmlspecialchars($_POST['description']);
 
 if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
-    $stmt = $db->prepare("SELECT userid FROM stream WHERE streamid = ? LIMIT 1");
+    $stmt = $db->prepare("SELECT userid, `format`, scheule_time FROM stream WHERE streamid = ? LIMIT 1");
     if (!$stmt->execute([$_POST['edit_id']])) {
         exit('Database error');
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($row['userid'] != $_SESSION['id']) {
         exit('Access denied');
+    }
+    if ($row['format'] == 'video') {
+        $_POST['scheule_time'] = $row['scheule_time'];
     }
     $stmt = null;
 
@@ -36,9 +39,9 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
     }
     $streamid = $_POST['edit_id'];
 } else {
-    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`) VALUES (?, ?, ?, ?, ?, ?, 'hls')");
 
-    if (!$stmt->execute([$token, $_SESSION['id'], $title, $description, $_POST['scheule_time'], $_POST['visibility'], $_POST['format']])) {
+    if (!$stmt->execute([$token, $_SESSION['id'], $title, $description, $_POST['scheule_time'], $_POST['visibility']])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }
