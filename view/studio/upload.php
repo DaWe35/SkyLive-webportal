@@ -229,7 +229,7 @@
 </div>
 <div id="form" class="form-tab fade-in">
 	<form method="POST" enctype="multipart/form-data" id="form-data" onsubmit="saveChanges(); return false">
-		<input type="hidden" id="userid" name="userid" required value="<?= $userid ?>">
+		<input type="hidden" id="userid" name="userid" required value="<?= $_SESSION['id'] ?>">
 		<input type="hidden" id="skylink" name="skylink" required>
 		<p><input class="w3-input" type="text" placeholder="Title" id="title" name="title" required value="<?= $edit['title'] ?>" tabindex="1"></p>
 		<p><textarea class="w3-input" placeholder="Description" id="description" name="description" tabindex="2"><?= $edit['description'] ?></textarea></p>
@@ -362,7 +362,7 @@
 		row.id = 'row' + index;
 		let userid = document.createElement('td');
 		userid.className = 'hidden-cell';
-		userid.innerText = <?= $userid ?>;
+		userid.innerText = <?= $_SESSION['id'] ?>;
 		row.appendChild(userid);
 		let skylink = document.createElement('td');
 		skylink.className = 'hidden-cell';
