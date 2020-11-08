@@ -9,7 +9,7 @@
 
 		<form method="POST" class="new-stream-form" enctype="multipart/form-data">
 			<p><input class="w3-input" type="text" placeholder="Title" name="title" required value="<?= $edit['title'] ?>"></p>
-			<p><textarea class="w3-input" type="text" placeholder="Description" name="description" required><?= $edit['description'] ?></textarea></p>
+			<p><textarea class="w3-input" type="text" placeholder="Description" name="description"><?= $edit['description'] ?></textarea></p>
 			<p>Thumbnail: <input class="w3-input" type="file" placeholder="Thumbnail" name="file"></p> <?php
 
 			if ($edit['format'] == 'hls' || $edit['format'] == '') { ?>
