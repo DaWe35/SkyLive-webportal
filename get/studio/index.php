@@ -1,6 +1,6 @@
 <?php
 
-$stmt_streams = $db->prepare("SELECT `streamid`, `token`, `title`, `description`, `scheule_time`, `started`, `finished`, `visibility` FROM `stream` WHERE userid = ? AND visibility != 'deleted' ORDER BY streamid DESC");
+$stmt_streams = $db->prepare("SELECT `streamid`, `token`, `title`, `description`, `scheule_time`, `started`, `finished`, `visibility` FROM `stream` WHERE userid = ? AND visibility != 'deleted' ORDER BY scheule_time DESC, streamid DESC");
 if (!$stmt_streams->execute([$_SESSION['id']])) {
     exit('Database error');
 }
