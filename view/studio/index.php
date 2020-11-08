@@ -104,6 +104,12 @@ function finish_stream(streamid, elem) {
 	request.done(function(msg) {
 		if (msg == 'ok') {
 			elem.remove();
+			confetti({
+				angle: randomInRange(55, 125),
+				spread: randomInRange(50, 70),
+				particleCount: randomInRange(50, 100),
+				origin: { y: 0.6 }
+			});
 		} else {
 			alert( "Request failed: " + msg );
 		}
@@ -113,4 +119,12 @@ function finish_stream(streamid, elem) {
 		alert( "Request failed: " + textStatus );
 	});
 }
+
+
+
+function randomInRange(min, max) {
+	return Math.random() * (max - min) + min;
+}
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.1/dist/confetti.browser.min.js"></script>
