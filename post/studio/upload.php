@@ -2,7 +2,12 @@
 
 $title = htmlspecialchars($_POST['title']);
 $description = htmlspecialchars($_POST['description']);
+
 $current_time = time();
+$scheule_time = intval($_POST['scheule_time']);
+if ($scheule_time > $current_time || $scheule_time < $current_time - 86400) {
+    $scheule_time = $current_time;
+}
 
 if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
     $stmt = $db->prepare("SELECT userid FROM stream WHERE streamid = ? LIMIT 1");
@@ -25,7 +30,7 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
 } else {
     $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`, `started`, finished) VALUES ('', ?, ?, ?, ?, ?, 'video', '1', '1')");
 
-    if (!$stmt->execute([$_SESSION['id'], $title, $description, $current_time, $_POST['visibility']])) {
+    if (!$stmt->execute([$_SESSION['id'], $title, $description, $scheule_time, $_POST['visibility']])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }

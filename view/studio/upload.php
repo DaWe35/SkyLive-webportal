@@ -566,7 +566,7 @@
 	function set_scheule_time() {
 		var now = new Date();
 		now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-		document.getElementById('scheule_time_local').value = now.toISOString().slice(0,16);
+		document.getElementById('scheule_time_local').value = now.toISOString().slice(0,19);
 		change_timestamp();
 	}
 
