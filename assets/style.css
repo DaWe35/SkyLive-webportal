@@ -233,4 +233,5 @@ footer .built-with-sia-logo {
 
 .video-thumbnail-max-16-9 {
 	width: auto;
+	max-width: 100%;
 }
