@@ -325,7 +325,7 @@
 
 	//uploading to Skynet
 	const skynetUrl = 'https://siasky.net/skynet/skyfile'; //this should be replaced with a link to desired portal
-	const requestInterval = 500; //interval in ms between subsequent requests to prevent HTTP 429 error
+	const requestInterval = 100; //interval in ms between subsequent requests to prevent HTTP 429 error
 
 	function handleFiles(files) {
 		if (files.length != 0) {
@@ -336,6 +336,7 @@
 			document.getElementById('file-select').value = '';
 		}
 	}
+
 
 	function uploadVideo(file, i) {
 		let fd = new FormData();
