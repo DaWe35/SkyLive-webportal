@@ -28,7 +28,7 @@ $player = URL . 'player?s=';
 			</div> <?php
 			if (time() >= 1593792000) { ?>
 				<div href="register" class="position-absolute text-white" style="top: 5px; right: 15px;">
-					<a class="text-white" href="register">Get beta access</a> | 
+					<a class="text-white" href="register">Register</a> | 
 					<a class="text-white" href="login">Login</a>
 				</div>
 				 <?php
