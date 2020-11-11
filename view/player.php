@@ -45,6 +45,9 @@
                 </a>
             </div>
         </div>
+        <div class="row text-left text-secondary">
+                <?= nl2br($stream['description']) ?>
+        </div>
     </div>
 
     <!-- <button onclick="switchMode()" class="BT-OH-BR-R6-NF-FH-FP-PT" id="button">
