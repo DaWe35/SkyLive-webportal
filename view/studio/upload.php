@@ -326,31 +326,54 @@
 	//uploading to Skynet
 	const skynetUrl = 'https://siasky.net/skynet/skyfile'; //this should be replaced with a link to desired portal
 	const requestInterval = 100; //interval in ms between subsequent requests to prevent HTTP 429 error
+	var queue = []; //global variable keeping the list of files to upload
+	var currentBatch = 0; //number of files in the current batch
+	var remaining = 0; //number of remaining files from the current batch
+	var finished = 0; //number of files already uploaded
 
 	function handleFiles(files) {
-		if (files.length != 0) {
+		currentBatch += files.length;
+		if (currentBatch != 0) {
 			uploadLabel.style.display = 'none';
-			for (let i = 0; i < files.length; i++) {
-				setTimeout(uploadVideo, requestInterval * i, files[i], i + uploadTable.childElementCount);
-			};
-			document.getElementById('file-select').value = '';
 		}
+		for (let i = 0; i < files.length; i++) {
+			queue.push(files[i]);
+			let row = createTableRow(files[i].name, uploadTable.childElementCount);
+			uploadTable.appendChild(row);
+		}
+		if (remaining == 0) {
+			remaining = files.length;
+			uploadVideo(finished);
+		} else {
+			remaining += files.length;
+		}
+		document.getElementById('file-select').value = '';
 	}
 
 
-	function uploadVideo(file, i) {
+	function uploadVideo(i) {
 		let fd = new FormData();
-		fd.append('file', file, file.name);
-		let row = createTableRow(file.name, i);
-		uploadTable.appendChild(row);
+		fd.append('file', queue[i], queue[i].name);
 		let req = new XMLHttpRequest();
 		req.open('POST', skynetUrl, true);
 		req.upload.onprogress = function(ev) {
 			updateProgress(i, (ev.loaded * 90.0 / ev.total) || 90, '');
+			if (ev.loaded == ev.total) {
+				if (i < finished + currentBatch - 1) {
+					setTimeout(uploadVideo, requestInterval, i + 1);
+				}
+			}
 		};
 		req.onreadystatechange = function() {
-			if ((this.readyState == 4) && (this.status == 200)) {
-				updateProgress(i, 100, JSON.parse(this.responseText).skylink);
+			if (this.readyState == 4) {
+				if (this.status == 200) {
+					updateProgress(i, 100, JSON.parse(this.responseText).skylink);
+				}
+				remaining--;
+				if (remaining == 0) {
+					finished += currentBatch;
+					currentBatch = 0;
+				}
 			}
 		};
 		req.send(fd);
@@ -420,7 +443,6 @@
 				uploadTable.childNodes[fileNo].onclick = formShow;
 				sendData(fileNo, false);
 			}, 500);
-
 		}
 	}
 
