@@ -32,19 +32,23 @@ $pagetitle = $stream['title'];
 $ogimage = image_print($stream['streamid'], 600);
 $stream_url = 'stream.m3u8?streamid=' . htmlspecialchars($_GET['s']) . '&portal=' . $portal;
 
-if ($stream['format'] == 'video') {
-    $stmt = $db->prepare("SELECT `skylink` FROM `chunks` WHERE streamid = ? AND resolution = 'original' ORDER BY id ASC");
-	if (!$stmt->execute([$stream['streamid']])) {
-		exit('Database error');
-    }
-    $chunk_info = $stmt->fetch(PDO::FETCH_ASSOC);
-    $video_skylink = $chunk_info['skylink'];
-}
 
 if (isset($_GET['portal'])) {
     $portal = htmlspecialchars($_GET['portal']);
 } else {
     $portal = 'https://siasky.net/';
 }
+
+if ($stream['format'] == 'video' || $stream['format'] == 'audio') {
+    $stmt = $db->prepare("SELECT `skylink` FROM `chunks` WHERE streamid = ? AND resolution = 'original' ORDER BY id ASC");
+	if (!$stmt->execute([$stream['streamid']])) {
+		exit('Database error');
+    }
+    $chunk_info = $stmt->fetch(PDO::FETCH_ASSOC);
+    $video_src = 'src="' . $portal . $chunk_info['skylink'] . '"';
+} else {
+    $video_src = '';
+}
+
 
 include 'model/display.php';

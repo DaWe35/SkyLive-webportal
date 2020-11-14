@@ -27,7 +27,16 @@
                     <a href="vlc-x-callback://x-callback-url/stream?url=<?= $stream_url ?>">Open in VLC</a><br>
                     If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
                 </div>
-                <video id="my_video_1" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>" <?= isset($video_skylink) ? 'src="' . $portal . $video_skylink . '"' : '' ?> >Sorry, HTML5 video is not supported in your browser</video>
+
+
+                <!-- Audio player -->
+                <div id="mp3_player">
+                    <canvas id="analyser_render"></canvas>
+                    <div id="audio_box">
+                        <!-- Video player -->
+                        <video id="my_video_1" crossorigin="anonymous" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>" <?= $video_src ?> >Sorry, HTML5 video is not supported in your browser</video>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
                 <iframe id="chat" src="https://skymessage.hns.siasky.net/#skylive" allowTransparency="true"></iframe>
@@ -133,6 +142,69 @@
     }
     xhttp.open("GET", "https://siastats.info/dbs/skynet_current.json", true);
     xhttp.send();
+
+
+
+
+    // AUDIO PLAYER
+    window.requestAnimFrame = function(){
+        return (
+            window.requestAnimationFrame       || 
+            window.webkitRequestAnimationFrame || 
+            window.mozRequestAnimationFrame    || 
+            window.oRequestAnimationFrame      || 
+            window.msRequestAnimationFrame     || 
+            function(/* function */ callback){
+                window.setTimeout(callback, 1000 / 60);
+            }
+        );
+    }();
+
+    function loadAudio() {
+        // Create a new instance of an audio object and adjust some of its properties
+        var audio = document.getElementById('my_video_1');
+        // Establish all variables that your Analyser will use
+        var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
+        // Initialize the MP3 player after the page loads all of its HTML into the window
+        // window.addEventListener("load", initMp3Player, false);
+        initMp3Player(audio)
+    }
+
+    function initMp3Player(audio){
+        document.getElementById('audio_box').appendChild(audio);
+        context = new AudioContext(); // AudioContext object instance
+        analyser = context.createAnalyser(); // AnalyserNode method
+        canvas = document.getElementById('analyser_render');
+        ctx = canvas.getContext('2d');
+        // Re-route audio playback into the processing graph of the AudioContext
+        source = context.createMediaElementSource(audio); 
+        source.connect(analyser);
+        analyser.connect(context.destination);
+        frameLooper();
+    }
+    // frameLooper() animates any style of graphics you wish to the audio frequency
+    // Looping at the default frame rate that the browser provides(approx. 60 FPS)
+    function frameLooper(){
+        window.requestAnimFrame(frameLooper);
+        fbc_array = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(fbc_array);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.fillStyle = '#00c0f0'; // Color of the bars
+        bars = 37;
+        for (var i = 0; i < bars; i++) {
+            bar_x = i * 8;
+            bar_width = 6;
+            bar_height = -(fbc_array[i] / 2);
+            //fillRect( x, y, width, height ) // Explanation of the parameters below
+            ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+        }
+    } <?php 
+
+    if ($stream['format'] != 'video') {
+        echo 'loadAudio()';
+    } ?>
+
+
 
 
     // Chat button

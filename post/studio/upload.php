@@ -28,9 +28,14 @@ if (isset($_POST['edit_id']) && !empty($_POST['edit_id'])) {
     }
     $streamid = $_POST['edit_id'];
 } else {
-    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`, `started`, finished) VALUES ('', ?, ?, ?, ?, ?, 'video', '1', '1')");
+    if ($_POST['streamtype'] == 'audio') {
+        $streamFormat = 'audio';
+    } else {
+        $streamFormat = 'video';
+    }
+    $stmt = $db->prepare("INSERT INTO stream (token, userid, title, `description`, scheule_time, visibility, `format`, `started`, finished) VALUES ('', ?, ?, ?, ?, ?, ?, '1', '1')");
 
-    if (!$stmt->execute([$_SESSION['id'], $title, $description, $scheule_time, $_POST['visibility']])) {
+    if (!$stmt->execute([$_SESSION['id'], $title, $description, $scheule_time, $_POST['visibility'], $streamFormat])) {
         // print_r($stmt->errorInfo());
         exit('Database error');
     }

@@ -222,7 +222,7 @@
 				<table id="upload-table"></table>
 			</div>
 			<div class="button-area">
-				<input type="file" id="file-select" multiple accept="video/*" onchange="handleFiles(this.files)">
+				<input type="file" id="file-select" multiple accept="audio/*,video/*" onchange="handleFiles(this.files)">
 				<label class="button button-right" for="file-select" tabindex="1" onkeydown="keyDown(event, this)" onkeyup="keyUp(event, this)" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" onmousedown="mouseDown(this)" onmouseup="mouseUp(this)">Select file(s)</label>
 			</div>
 		</div>
@@ -253,6 +253,8 @@
 			<label for="private" tabindex="7" onkeyup="keyUp(event, this)">Private</label><br>
 			<small id="private_notice">Files on Skynet are public, be careful!</small>
 		</p>
+		
+		<input type="hidden" id="streamtype" name="streamtype" required>
 		<p class="text-center">
 			<input type="submit" id="submit">
 			<label id="submit-button" class="button" for="submit" tabindex="8" onkeydown="keyDown(event, this)" onkeyup="keyUp(event, this)" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" onmousedown="mouseDown(this)" onmouseup="mouseUp(this)"><i class="fa fa-save"></i>&nbsp;Save details</label>
@@ -424,6 +426,10 @@
 		edit_id.className = 'hidden-cell';
 		edit_id.innerText = '';
 		row.appendChild(edit_id);
+		let streamtype = document.createElement('td');
+		streamtype.className = 'hidden-cell';
+		streamtype.innerText = '';
+		row.appendChild(streamtype);
 		return row;
 	}
 
@@ -434,12 +440,40 @@
 			uploadTable.childNodes[fileNo].childNodes[1].innerText = skylink;
 			//make the progress bar disappear 0.5s after the upload is complete
 			setTimeout(function() {
-				let s = uploadTable.childNodes[fileNo].childNodes[2].innerText;
-				if ((s.slice(-4) == '.mp4') || (s.slice(-4) == '.wmv')) {
-					uploadTable.childNodes[fileNo].childNodes[3].innerText = s.slice(0, s.length - 4);
+				let filename = uploadTable.childNodes[fileNo].childNodes[2].innerText;
+				let filenameLower = filename.toLowerCase()
+				var streamType = null
+				var foundFormat = ''
+				let videoFormats = ['mp4', 'm4p', 'm4v', 'webm', 'flv', '3gp', 'mov', 'avi', 'qt', 'wav', 'ogg', 'wmv', 'qt', 'avchd', 'ts', 'mkv']
+				let audioFormats = ['aiff', 'au', 'flac', 'mp3', 'm4a', 'snd', 'wav', 'w64', 'wma', 'm4b']
+
+				for (let index = 0; index < videoFormats.length; index++) {
+					let format = videoFormats[index]
+					if (filenameLower.endsWith('.' + format)) {
+						streamType = 'video'
+						foundFormat = format
+						break
+					}
+				}
+
+				for (let index = 0; index < audioFormats.length; index++) {
+					let format = audioFormats[index]
+					if (filenameLower.endsWith('.' + format)) {
+						streamType = 'audio'
+						foundFormat = format
+						break
+					}
+				}
+				
+				uploadTable.childNodes[fileNo].childNodes[10].innerText = streamType ?? 'video'
+
+				if (foundFormat != '') {
+					let formatLength = foundFormat.length + 1
+					var fileTitle = filename.slice(0, filename.length - formatLength)
 				} else {
-					uploadTable.childNodes[fileNo].childNodes[3].innerText = s;
-				};
+					var fileTitle = filename
+				}
+				uploadTable.childNodes[fileNo].childNodes[3].innerText = fileTitle;
 				uploadTable.childNodes[fileNo].onclick = formShow;
 				sendData(fileNo, false);
 			}, 500);
@@ -491,6 +525,7 @@
 		uploadTable.childNodes[row].childNodes[4].innerText = document.getElementById('description').value;
 		uploadTable.childNodes[row].childNodes[5].innerText = document.getElementById('scheule_time').value;
 		uploadTable.childNodes[row].childNodes[6].innerText = document.getElementById('scheule_time_local').value;
+		uploadTable.childNodes[row].childNodes[6].innerText = document.getElementById('scheule_time_local').value;
 		if (document.getElementById('public').checked) {
 			uploadTable.childNodes[row].childNodes[7].innerText = 'public';
 		} else if (document.getElementById('non-listed').checked) {
@@ -522,6 +557,7 @@
 		if (thumbnail != false) {
 			fd.append('edit_id', uploadTable.childNodes[row].childNodes[9].innerText);
 		}
+		fd.append('streamtype', uploadTable.childNodes[row].childNodes[10].innerText);
 		req.onreadystatechange = function() { // Call a function when the state changes.
 			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 				if (parseInt(req.response) > 1) {
