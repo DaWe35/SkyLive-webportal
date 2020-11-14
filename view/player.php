@@ -196,7 +196,7 @@
             bar_width = 6;
             bar_height = -(fbc_array[i] / 2);
             //fillRect( x, y, width, height ) // Explanation of the parameters below
-            ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+            ctx.fillRect(bar_x, canvas.height, bar_width, bar_height *0.6);
         }
     } <?php 
 
