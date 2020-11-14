@@ -66,7 +66,7 @@
     </button> -->
     
     <script> <?php 
-    if ($stream['format'] != 'video') { ?>
+    if ($stream['format'] == 'hls') { ?>
         // Display warning on IOS
         var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (iOS && <?= $stream['finished'] ?> == 0) {
@@ -160,11 +160,13 @@
         );
     }();
 
+    
+    var audioCanvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
+    var loadedAudio = false
     function loadAudio() {
         // Create a new instance of an audio object and adjust some of its properties
         var audio = document.getElementById('my_video_1');
         // Establish all variables that your Analyser will use
-        var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
         // Initialize the MP3 player after the page loads all of its HTML into the window
         // window.addEventListener("load", initMp3Player, false);
         initMp3Player(audio)
@@ -174,9 +176,9 @@
         document.getElementById('audio_box').appendChild(audio);
         context = new AudioContext(); // AudioContext object instance
         analyser = context.createAnalyser(); // AnalyserNode method
-        canvas = document.getElementById('analyser_render')
-	    canvas.style.background = 'rgba(0, 0, 0, 0.9)'
-        ctx = canvas.getContext('2d');
+        audioCanvas = document.getElementById('analyser_render')
+	    audioCanvas.style.background = 'rgba(0, 0, 0, 0.9)'
+        ctx = audioCanvas.getContext('2d');
         // Re-route audio playback into the processing graph of the AudioContext
         source = context.createMediaElementSource(audio); 
         source.connect(analyser);
@@ -189,7 +191,7 @@
         window.requestAnimFrame(frameLooper);
         fbc_array = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(fbc_array);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.clearRect(0, 0, audioCanvas.width, audioCanvas.height); // Clear the canvas
         ctx.fillStyle = '#00c0f0'; // Color of the bars
         bars = 37;
         for (var i = 0; i < bars; i++) {
@@ -197,17 +199,23 @@
             bar_width = 6;
             bar_height = -(fbc_array[i] / 2);
             //fillRect( x, y, width, height ) // Explanation of the parameters below
-            ctx.fillRect(bar_x, canvas.height, bar_width, bar_height *0.6);
+            ctx.fillRect(bar_x, audioCanvas.height, bar_width, bar_height *0.6);
         }
     } <?php 
 
-    if ($stream['format'] != 'video') {
-        echo 'loadAudio()';
+    if ($stream['format'] != 'video') { ?>
+        var audio = document.getElementById("my_video_1");
+        audio.onplay = function() {
+            if (loadedAudio == false) {
+                loadedAudio = true
+                loadAudio()
+            }
+        }; <?php
     } ?>
 
 
 
-
+/* 
     // Chat button
         (function () {
     var lastTime = 0;
@@ -239,7 +247,7 @@
 
     // Get the buttons.
     var startBtn = document.getElementById('button');
-    /*var resetBtn = document.getElementById('resetBtn');*/
+    // var resetBtn = document.getElementById('resetBtn');
     // A variable to store the requestID.
     var requestID;
     // Canvas
@@ -342,7 +350,7 @@
 
     });
 
-    })();
+    })(); */
 
     </script>
 </body>
