@@ -174,7 +174,8 @@
         document.getElementById('audio_box').appendChild(audio);
         context = new AudioContext(); // AudioContext object instance
         analyser = context.createAnalyser(); // AnalyserNode method
-        canvas = document.getElementById('analyser_render');
+        canvas = document.getElementById('analyser_render')
+	    canvas.style.background = 'rgba(0, 0, 0, 0.9)'
         ctx = canvas.getContext('2d');
         // Re-route audio playback into the processing graph of the AudioContext
         source = context.createMediaElementSource(audio); 

@@ -253,5 +253,4 @@ div#mp3_player > canvas{
 	height: 100%;
 	bottom: 50px;
 	pointer-events: none;
-	background: rgba(0, 0, 0, 0.9);
 }
