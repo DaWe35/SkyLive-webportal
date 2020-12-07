@@ -186,7 +186,6 @@
 
         context = new AudioContext(); // AudioContext object instance
         analyser = context.createAnalyser(); // AnalyserNode method
-	    audioCanvas.style.background = 'rgba(0, 0, 0, 0.9)'
         ctx = audioCanvas.getContext('2d');
         // Re-route audio playback into the processing graph of the AudioContext
         source = context.createMediaElementSource(audio); 
