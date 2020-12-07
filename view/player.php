@@ -34,7 +34,7 @@
 
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
-                <iframe id="chat" src="https://skymessage.hns.siasky.net/#skylive" allowTransparency="true"></iframe>
+                <iframe id="chat" src="https://minnit.chat/SkyLive?embed&&nickname=" allowTransparency="true"></iframe><br><a href="https://minnit.chat/SkyLive" target="_blank">HTML5 Chatroom powered by Minnit Chat</a>
             </div>
         </div>
 
