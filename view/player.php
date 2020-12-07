@@ -4,6 +4,7 @@
     if ($stream['visibility'] != 'public') { ?>
         <meta name="robots" content="noindex" /> <?php
     } ?>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
 </head>
 <body class="player chatmode">
     
@@ -28,15 +29,9 @@
                     If it's not working, open VLC and play this network file: <?= URL . $stream_url ?>
                 </div>
 
+                <!-- Video player -->
+                <video id="my_video_1" crossorigin="anonymous" playsinline controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>" <?= $video_src ?> >Sorry, HTML5 video is not supported in your browser</video>
 
-                <!-- Audio player -->
-                <div id="mp3_player">
-                    <canvas id="analyser_render"></canvas>
-                    <div id="audio_box">
-                        <!-- Video player -->
-                        <video id="my_video_1" crossorigin="anonymous" controls preload="auto" poster="<?= image_print($stream['streamid'], 1920) ?>" <?= $video_src ?> >Sorry, HTML5 video is not supported in your browser</video>
-                    </div>
-                </div>
             </div>
             <div class="col-sm-8 col-md-3 p-0 minnit-chat-container">
                 <iframe id="chat" src="https://skymessage.hns.siasky.net/#skylive" allowTransparency="true"></iframe>
@@ -173,10 +168,19 @@
     }
 
     function initMp3Player(audio){
-        document.getElementById('audio_box').appendChild(audio);
+        document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(audio)
+        canv = document.createElement('canvas')
+        canv.id = 'analyser_render'
+        document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(canv) // adds the canvas to #someBox
+        audioCanvas = document.getElementById('analyser_render')
+
+        /* text_render = document.createElement('p')
+        text_render.id = 'text_render'
+        text_render.innerHTML = '<?= $stream['title'] ?>'
+        document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(text_render) // adds the canvas to #someBox */
+
         context = new AudioContext(); // AudioContext object instance
         analyser = context.createAnalyser(); // AnalyserNode method
-        audioCanvas = document.getElementById('analyser_render')
 	    audioCanvas.style.background = 'rgba(0, 0, 0, 0.9)'
         ctx = audioCanvas.getContext('2d');
         // Re-route audio playback into the processing graph of the AudioContext
@@ -203,7 +207,7 @@
         }
     } <?php 
 
-    if ($stream['format'] != 'video') { ?>
+    if ($stream['format'] == 'audio') { ?>
         var audio = document.getElementById("my_video_1");
         audio.onplay = function() {
             if (loadedAudio == false) {
@@ -353,4 +357,8 @@
     })(); */
 
     </script>
+    <script src="https://cdn.plyr.io/3.6.3/plyr.polyfilled.js"></script>
+    <script>
+        const player = new Plyr('#my_video_1');
+        </script>
 </body>

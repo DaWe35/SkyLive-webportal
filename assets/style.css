@@ -254,3 +254,17 @@ div#mp3_player > canvas{
 	bottom: 50px;
 	pointer-events: none;
 }
+
+#analyser_render {
+	top: 0;
+	width: 80%;
+	margin-left: 10%;
+}
+
+#text_render {
+	position: absolute;
+	text-align: left;
+	bottom: 30px;
+	width: 80%;
+	margin-left: 10%;
+}
