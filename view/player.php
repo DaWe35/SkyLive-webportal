@@ -167,8 +167,13 @@
         initMp3Player(audio)
     }
 
-    function initMp3Player(audio){
+    function initMp3Player(audio) {
         document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(audio)
+
+        analyser_bg = document.createElement('canvas')
+        analyser_bg.id = 'analyser_bg'
+        document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(analyser_bg)
+        
         canv = document.createElement('canvas')
         canv.id = 'analyser_render'
         document.getElementsByClassName('plyr__video-wrapper')[0].appendChild(canv) // adds the canvas to #someBox

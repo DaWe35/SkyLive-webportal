@@ -255,10 +255,15 @@ div#mp3_player > canvas{
 	pointer-events: none;
 }
 
+#analyser_bg {
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
 #analyser_render {
 	top: 0;
 	width: 80%;
 	margin-left: 10%;
+	position: absolute;
 }
 
 #text_render {
@@ -268,3 +273,4 @@ div#mp3_player > canvas{
 	width: 80%;
 	margin-left: 10%;
 }
+
