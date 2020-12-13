@@ -3,12 +3,6 @@
 	background: linear-gradient(130deg, rgb(44, 136, 136) 30%, #244877 75%)
 }
 
-#subscribe button {
-	background-color: #FFF;
-	border: none;
-	color: rgba(68,51,122,1);
-}
-
 .play {
 	border: 0;
 	background: transparent;
