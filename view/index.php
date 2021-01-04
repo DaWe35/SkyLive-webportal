@@ -96,7 +96,7 @@ $player = URL . 'player?s=';
 							<h4 class="card-title"><?= $row['title'] ?></h4>
 						</a>
 						<div class="card-text">
-							<?= substrhtml($row['description'], 0, 150)... ?>
+							<?= substrhtml($row['description'], 0, 150) ?>...
 						</div>
 					</div>
 				</div>
