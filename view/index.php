@@ -89,7 +89,7 @@ $player = URL . 'player?s=';
 						} else if ($row['finished'] == 0) { ?>
 							<div class="ribbon ribbon-red">On air</div> <?php
 						} ?>
-						<img class="card-img-top video-thumbnail-max-16-9" src="<?= image_print($row['streamid'], 600) ?>" alt="">
+						<img class="card-img-top video-thumbnail-max-16-9" src="<?= image_print($row['streamid'], 600) ?>" alt="" onerror="this.onerror=null;this.src='/assets/logos/placeholder.jpg';">
 					</a>
 					<div class="card-body">
 						<a href="<?= $player . $row['streamid']?>">
