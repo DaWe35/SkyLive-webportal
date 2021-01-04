@@ -79,7 +79,7 @@ $player = URL . 'player?s=';
 <div class="container-fluid">
 	<div class="row mt-5 mr-2 ml-2"> <?php
 		while ($row = $streams_stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-			<div class="col-md-3 mb-5">
+			<div class="col-xl-3 col-lg-4 col-md-6 mb-5">
 				<div class="card h-100 shadow">
 					<a href="<?= $player . $row['streamid']?>" class="position-relative text-center"> <?php
 						date_default_timezone_set('UTC');
@@ -96,7 +96,7 @@ $player = URL . 'player?s=';
 							<h4 class="card-title"><?= $row['title'] ?></h4>
 						</a>
 						<div class="card-text">
-							<?= $row['description'] ?>
+							<?= substrhtml($row['description'], 0, 200) ?>
 						</div>
 					</div>
 				</div>

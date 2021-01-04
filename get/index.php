@@ -7,5 +7,6 @@ if (!$streams_stmt->execute([$current_time_plus_10_min])) {
     exit('Database error');
 }
 
+include 'model/substrhtml.php';
 include 'model/display.php';
 
