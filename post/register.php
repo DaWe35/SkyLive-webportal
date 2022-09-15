@@ -1,5 +1,7 @@
 <?php
 
+exit("The registration is no longer available");
+
 if (empty($_POST['password'])):
     exit('Password is empty');
 elseif (empty($_POST['email'])):
