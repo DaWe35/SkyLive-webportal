@@ -65,7 +65,7 @@ $player = URL . 'player?s=';
 						<a class="text-white" href="studio">Studio</a> | 
 						<a class="text-white" href="logout">Logout</a> <?php
 					} else { ?>
-						<a class="text-white" href="register">Register</a> | 
+						<a class="text-muted" style="pointer-events: hover;" data-placement="bottom" title="No longer available">Register</a> | 
 						<a class="text-white" href="login">Login</a> <?php
 					} ?>
 				</div>
@@ -77,6 +77,7 @@ $player = URL . 'player?s=';
 
 <!-- Page Content -->
 <div class="container-fluid">
+	<div class="alert alert-danger mx-auto" style="max-width:500px; margin-top:40px; text-align:center">This project is archived and you can no longer upload more videos.</div>
 	<div class="row mt-5 mr-2 ml-2"> <?php
 		while ($row = $streams_stmt->fetch(PDO::FETCH_ASSOC)) { ?>
 			<div class="col-xl-3 col-lg-4 col-md-6 mb-5">

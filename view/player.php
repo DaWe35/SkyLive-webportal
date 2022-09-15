@@ -21,6 +21,7 @@
     <a href="<?= URL ?>" class="logo"><button class="play mini-logo-play"></button> &nbsp;SkyLive</a>
 
     <div class="container">
+        <div class="alert alert-danger mx-auto" style="max-width:500px; margin-top:20px; marginbottom:20px; text-align:center">This project is archived and you can no longer upload more videos.</div>
         <div class="row">
             <div class="col-sm-12 col-md-9 p-0">
                 <div id="ios_warning">
